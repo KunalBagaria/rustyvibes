@@ -7,7 +7,7 @@ pub mod sound {
         println!("{}", &file_name[..]);
         
         thread::spawn(move|| {
-            play::play("/Users/kunalbagaria/Desktop/rustyvibes/default/key1.mp3").unwrap();
+            play::play("/Users/kunalbagaria/Desktop/rustyvibes/default/key6.mp3").unwrap();
         });
     }
 }
