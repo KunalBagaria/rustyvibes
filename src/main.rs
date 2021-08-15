@@ -3,12 +3,13 @@ use serde_json;
 use std::error::Error;
 use std::fs;
 use serde_json::{Value, Map};
+use libc;
 
 mod play_sound;
-mod json;
+mod macos;
 
 pub use crate::play_sound::sound;
-// pub use crate::json::json_data::JSONData;
+pub use crate::macos::macos_mod;
 
 
 fn initialize_json(path: &str) -> Result<Map<String, Value>, Box<dyn Error>> {
@@ -19,20 +20,28 @@ fn initialize_json(path: &str) -> Result<Map<String, Value>, Box<dyn Error>> {
 }
 
 fn main() {
-    let json_file = initialize_json("default/config.json").unwrap();
-    println!("{:#?}", json_file["defines"]);
-    // println!("{:#?}", json_file.data);
+    unsafe {
+        libc::setpriority(libc::PRIO_PROCESS, 0, -20);
+    }
     if let Err(error) = listen(callback) {
         println!("Error: {:?}", error)
     }
 }
 
 fn callback(event: Event) {
+    let json_file: serde_json::Map<std::string::String, serde_json::Value> = initialize_json("default/config.json").unwrap();
     match event.event_type {
         rdev::EventType::KeyPress(key) => {
-            let key_name: String = format!("{:?}", key).to_string();
-            sound::play_sound(key_name)
-            // println!("{:?}.wav", key)
+            let key_code = macos_mod::code_from_key(key);
+            match key_code {
+                Some(code) => {
+                    let mut dest: String = json_file["defines"][code.to_string().as_str()].to_string();
+                    dest.remove(0);
+                    dest.remove(dest.len() - 1);
+                    sound::play_sound(dest)
+                },
+                None => println!("{}", "Unknown key")
+            }
         },
         _ => ()
     }

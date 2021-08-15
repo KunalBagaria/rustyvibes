@@ -2,6 +2,10 @@
 # will have compiled files and executables
 /target/
 /default/
+/default-1/
+/default-2/
+/default-3/
+/default-4/
 # Remove Cargo.lock from gitignore if creating an executable, leave it for libraries
 # More information here https://doc.rust-lang.org/cargo/guide/cargo-toml-vs-cargo-lock.html
 Cargo.lock
