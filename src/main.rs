@@ -12,7 +12,6 @@ mod keycode;
 pub use crate::play_sound::sound;
 pub use crate::keycode::key_code;
 
-
 fn initialize_json(path: &str) -> Result<Map<String, Value>, Box<dyn Error>> {
     let config = fs::read_to_string(path)?;
     let parsed: Value = serde_json::from_str(&config)?;
@@ -21,13 +20,15 @@ fn initialize_json(path: &str) -> Result<Map<String, Value>, Box<dyn Error>> {
 }
 
 fn main() {
+    
+    let args: Vec<String> = env::args().collect();
     let current_os = env::consts::OS;
+
     if current_os == "macos" {
         unsafe { nice(-20) };
     } else {
         print!("this is not macos");
     }
-    let args: Vec<String> = env::args().collect();
     if args.len() != 2 {
         println!(
 r#"
@@ -53,15 +54,18 @@ rustyvibes <soundpack_path>
 fn callback(event: Event) {
     match event.event_type {
         rdev::EventType::KeyPress(key) => {
-            let json_file: serde_json::Map<std::string::String, serde_json::Value> = initialize_json("default/config.json").unwrap();
+            let args: Vec<String> = env::args().collect();
+            let directory = args[1].clone();
+            let soundpack_config = &format!("{}/config.json", directory)[..];
+            println!("{}", soundpack_config);
+            let json_file: serde_json::Map<std::string::String, serde_json::Value> = initialize_json(soundpack_config).unwrap();
             let key_code = key_code::code_from_key(key);
             match key_code {
                 Some(code) => {
-                    println!("{}", code);
                     let mut dest: String = json_file["defines"][code.to_string().as_str()].to_string();
                     dest.remove(0);
                     dest.remove(dest.len() - 1);
-                    sound::play_sound(dest)
+                    sound::play_sound(format!("{}/{}", directory, dest));
                 },
                 None => println!("{}", "Unknown key")
             }
