@@ -1,15 +1,16 @@
 use rdev::{ listen, Event };
 use serde_json;
+use std::env;
 use std::error::Error;
 use std::fs;
-use serde_json::{Value, Map};
-use libc;
+use serde_json::{ Value, Map };
+use libc::{ nice };
 
 mod play_sound;
-mod macos;
+mod keycode;
 
 pub use crate::play_sound::sound;
-pub use crate::macos::macos_mod;
+pub use crate::keycode::key_code;
 
 
 fn initialize_json(path: &str) -> Result<Map<String, Value>, Box<dyn Error>> {
@@ -20,21 +21,43 @@ fn initialize_json(path: &str) -> Result<Map<String, Value>, Box<dyn Error>> {
 }
 
 fn main() {
-    unsafe {
-        libc::setpriority(libc::PRIO_PROCESS, 0, -20);
+    let current_os = env::consts::OS;
+    if current_os == "macos" {
+        unsafe { nice(-20) };
+    } else {
+        print!("this is not macos");
     }
-    if let Err(error) = listen(callback) {
-        println!("Error: {:?}", error)
+    let args: Vec<String> = env::args().collect();
+    if args.len() != 2 {
+        println!(
+r#"
+_   _
+| | | |                         
+| | | | ___   __ _   __ _   ___ 
+| | | |/ __| / _` | / _` | / _ \
+| |_| |\__ \| (_| || (_| ||  __/
+ \___/ |___/ \__,_| \__, | \___|
+                     __/ |      
+                    |___/
+
+rustyvibes <soundpack_path>
+"#);
+
+    } else {
+        if let Err(error) = listen(callback) {
+            println!("Error: {:?}", error)
+        }
     }
 }
 
 fn callback(event: Event) {
-    let json_file: serde_json::Map<std::string::String, serde_json::Value> = initialize_json("default/config.json").unwrap();
     match event.event_type {
         rdev::EventType::KeyPress(key) => {
-            let key_code = macos_mod::code_from_key(key);
+            let json_file: serde_json::Map<std::string::String, serde_json::Value> = initialize_json("default/config.json").unwrap();
+            let key_code = key_code::code_from_key(key);
             match key_code {
                 Some(code) => {
+                    println!("{}", code);
                     let mut dest: String = json_file["defines"][code.to_string().as_str()].to_string();
                     dest.remove(0);
                     dest.remove(dest.len() - 1);
