@@ -57,7 +57,6 @@ fn callback(event: Event) {
             let args: Vec<String> = env::args().collect();
             let directory = args[1].clone();
             let soundpack_config = &format!("{}/config.json", directory)[..];
-            println!("{}", soundpack_config);
             let json_file: serde_json::Map<std::string::String, serde_json::Value> = initialize_json(soundpack_config).unwrap();
             let key_code = key_code::code_from_key(key);
             match key_code {
