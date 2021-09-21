@@ -36,12 +36,9 @@ rustyvibes <soundpack_path>
 
 ### Mechvibes vs. Rustyvibes
 
-Mechvibes uses Electron and is shipped with Chromium to enable multi-platform support. While this may sound good, Chromium is very resource intensive and uses a lot of CPU and Memory.
-
-![Mechvibes CPU Usage](https://i.imgur.com/MwplMkW.png)
-
-Rustyvibes on the other hand, is a CLI tool made with Rust, which is a really efficient language and can be compiled to work across all the platforms without having to ship an entire broswer with it. It uses almost 10x lesser CPU and Memory power than Mechvibes.
+How does Rustyvibes compare to its competitors like Mechvibes? Mechvibes uses Electron and Chromium which is very resource intensive. Rustyvibes on the other hand is made with Rust and can be upto 10x-100x more resource efficient.
 
 
-(Insert Rustyvibes CPU Usage Screenshot here)
+## Contribute to this project
 
+[![PayPal Button](https://i.imgur.com/YmZFZL7.png)](https://paypal.me/kb24x7)
