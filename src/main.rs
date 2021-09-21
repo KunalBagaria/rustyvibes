@@ -66,7 +66,12 @@ fn callback(event: Event) {
                     dest.remove(dest.len() - 1);
                     sound::play_sound(format!("{}/{}", directory, dest));
                 },
-                None => println!("{}", "Unknown key")
+                None => {
+                    let mut dest: String = json_file["defines"][1.to_string().as_str()].to_string();
+                    dest.remove(0);
+                    dest.remove(dest.len() - 1);
+                    sound::play_sound(format!("{}/{}", directory, dest));
+                }
             }
         },
         _ => ()
