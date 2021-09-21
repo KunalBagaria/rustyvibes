@@ -44,7 +44,7 @@ pub mod key_code {
     const NUM7: i32 = 8;
     const NUM8: i32 = 9;
     const NUM9: i32 = 10;
-    const NUM0: i32 = 0;
+    const NUM0: i32 = 11;
     const MINUS: i32 = 12;
     const EQUAL: i32 = 13;
 

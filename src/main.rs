@@ -61,6 +61,7 @@ fn callback(event: Event) {
             let key_code = key_code::code_from_key(key);
             match key_code {
                 Some(code) => {
+                    println!("{}", code);
                     let mut dest: String = json_file["defines"][code.to_string().as_str()].to_string();
                     dest.remove(0);
                     dest.remove(dest.len() - 1);
