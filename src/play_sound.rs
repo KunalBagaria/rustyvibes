@@ -3,6 +3,7 @@ pub mod sound {
     use play;
     extern crate ears;
     use ears::{ Sound, AudioController };
+
     pub fn play_sound(name: String) {
         let file_name = format!("{}", name);
         thread::spawn(move|| {
