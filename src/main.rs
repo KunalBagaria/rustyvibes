@@ -19,16 +19,35 @@ fn initialize_json(path: &str) -> Result<Map<String, Value>, Box<dyn Error>> {
     Ok(obj)
 }
 
-fn main() {
-    
-    let args: Vec<String> = env::args().collect();
-    let current_os = env::consts::OS;
+struct JSONFile {
+    pub value: Option<serde_json::Map<std::string::String, serde_json::Value>>
+}
 
-    if current_os == "macos" {
-        unsafe { nice(-20) };
-    } else {
-        print!("this is not macos");
+impl JSONFile {
+    pub fn initialize(self: &Self) {
+        let args: Vec<String> = env::args().collect();
+        let directory = args[1].clone();
+        let soundpack_config = &format!("{}/config.json", directory)[..];
+        self.value = Some(initialize_json(soundpack_config).unwrap());
     }
+    pub fn event_handler(self: &Self, event: Event) {
+        match self.value {
+            Some(value) => {
+                callback(event, value);
+            },
+            None => { println!("JSON wasn't initialized"); }
+        }
+    }
+}
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+
+    let json_file = JSONFile { value: None };
+    json_file.initialize();
+
+    unsafe { nice(-20) };
+
     if args.len() != 2 {
         println!(
 r#"
@@ -45,19 +64,18 @@ rustyvibes <soundpack_path>
 "#);
 
     } else {
-        if let Err(error) = listen(callback) {
+        if let Err(error) = listen(json_file.event_handler) {
             println!("Error: {:?}", error)
         }
     }
 }
 
-fn callback(event: Event) {
+fn callback(event: Event, json_file: serde_json::Map<std::string::String, serde_json::Value>) {
     match event.event_type {
         rdev::EventType::KeyPress(key) => {
             let args: Vec<String> = env::args().collect();
             let directory = args[1].clone();
-            let soundpack_config = &format!("{}/config.json", directory)[..];
-            let json_file: serde_json::Map<std::string::String, serde_json::Value> = initialize_json(soundpack_config).unwrap();
+            // let json_file: serde_json::Map<std::string::String, serde_json::Value> = initialize_json(soundpack_config).unwrap();
             let key_code = key_code::code_from_key(key);
             match key_code {
                 Some(code) => {
