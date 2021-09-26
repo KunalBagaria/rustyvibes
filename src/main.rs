@@ -19,21 +19,21 @@ fn initialize_json(path: &str) -> Result<Map<String, Value>, Box<dyn Error>> {
     Ok(obj)
 }
 
-struct JSONFile {
+pub struct JSONFile {
     pub value: Option<serde_json::Map<std::string::String, serde_json::Value>>
 }
 
 impl JSONFile {
-    pub fn initialize(self: &Self) {
+    pub fn initialize(&mut self) {
         let args: Vec<String> = env::args().collect();
         let directory = args[1].clone();
         let soundpack_config = &format!("{}/config.json", directory)[..];
         self.value = Some(initialize_json(soundpack_config).unwrap());
     }
     pub fn event_handler(self: &Self, event: Event) {
-        match self.value {
+        match &self.value {
             Some(value) => {
-                callback(event, value);
+                callback(event, value.clone());
             },
             None => { println!("JSON wasn't initialized"); }
         }
@@ -43,7 +43,7 @@ impl JSONFile {
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    let json_file = JSONFile { value: None };
+    let mut json_file = JSONFile { value: None };
     json_file.initialize();
 
     unsafe { nice(-20) };
@@ -64,6 +64,7 @@ rustyvibes <soundpack_path>
 "#);
 
     } else {
+        // Can't pass a method where its asking for a function pointer
         if let Err(error) = listen(json_file.event_handler) {
             println!("Error: {:?}", error)
         }
