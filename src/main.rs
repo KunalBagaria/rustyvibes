@@ -46,6 +46,10 @@ fn main() {
     let mut json_file = JSONFile { value: None };
     json_file.initialize();
 
+    let event_handler = move |event: Event| {
+        json_file.event_handler(event);
+    };
+
     unsafe { nice(-20) };
 
     if args.len() != 2 {
@@ -65,7 +69,7 @@ rustyvibes <soundpack_path>
 
     } else {
         // Can't pass a method where its asking for a function pointer
-        if let Err(error) = listen(json_file.event_handler) {
+        if let Err(error) = listen(event_handler) {
             println!("Error: {:?}", error)
         }
     }
