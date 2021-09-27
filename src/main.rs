@@ -43,8 +43,6 @@ impl JSONFile {
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    unsafe { nice(-20) };
-
     if args.len() != 2 {
         println!(
 r#"
@@ -61,6 +59,8 @@ rustyvibes <soundpack_path>
 "#);
 
     } else {
+        unsafe { nice(-20) };
+        
         let mut json_file = JSONFile { value: None };
         json_file.initialize();
 
