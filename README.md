@@ -30,7 +30,7 @@ cargo install rustyvibes
 rustyvibes <soundpack_path>
 ```
 
-### Download Soundpacks: [Here](https://docs.google.com/spreadsheets/d/1PimUN_Qn3CWqfn-93YdVW8OWy8nzpz3w3me41S8S494/edit)
+### Download Soundpacks: [Here](https://docs.google.com/spreadsheets/d/1W5T2qwiWKnC1j3hociNEwvNV8mgk1o9w3qhcL3kE3wQ/edit?usp=sharing)
 
 ---
 
