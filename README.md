@@ -41,4 +41,4 @@ How does Rustyvibes compare to its competitors like Mechvibes? Mechvibes uses El
 
 ## Contribute to this project
 
-[![PayPal Button](https://i.imgur.com/YmZFZL7.png)](https://paypal.me/kb24x7)
+[![buymeacoffee](https://user-images.githubusercontent.com/61944452/135069133-ed671eca-bcab-4198-b467-6844083233a3.png)](https://www.buymeacoffee.com/kb24x7)
