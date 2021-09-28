@@ -4,7 +4,6 @@ use std::env;
 use std::error::Error;
 use std::fs;
 use serde_json::{ Value, Map };
-use libc::{ nice };
 
 mod play_sound;
 mod keycode;
@@ -56,7 +55,16 @@ Usage: rustyvibes <soundpack_path>
 "#);
 
     } else {
-        unsafe { nice(-20) };
+
+        {
+            #[cfg(target_os = "macos")]
+            unsafe { use libc::nice; nice(-20) };
+        }
+
+        {
+            #[cfg(target_os = "linux")]
+            unsafe { use libc::nice; nice(-20) };
+        }
         
         let mut json_file = JSONFile { value: None };
         json_file.initialize();
