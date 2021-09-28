@@ -15,7 +15,7 @@ A Rust CLI to play mechanical keyboard sounds globally
 ### macOS:
 
 ```
-brew tap kb24x7/rustyvibes && brew install rustyvibes
+brew install kb24x7/rustyvibes/rustyvibes
 ```
 
 ### Windows / Linux:
