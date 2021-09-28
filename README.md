@@ -21,7 +21,7 @@ brew tap kb24x7/rustyvibes && brew install rustyvibes
 ### Windows / Linux:
 
 ```
-To be updated
+cargo install rustyvibes
 ```
 
 # Usage
