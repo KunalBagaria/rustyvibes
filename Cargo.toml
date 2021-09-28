@@ -6,7 +6,6 @@ repository = "https://github.com/kb24x7/rustyvibes"
 keywords = ["mechanical", "keyboard", "keypress", "keyboard", "sound", "rust", "cli"]
 categories = ["command-line-utilities"]
 license = "MIT OR Apache-2.0"
-license-file = "LICENSE"
 version = "1.0.1"
 edition = "2018"
 
