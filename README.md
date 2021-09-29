@@ -23,13 +23,23 @@ cargo install rustyvibes
 rustyvibes <soundpack_path>
 ```
 
-### Download Soundpacks: [Here](https://docs.google.com/spreadsheets/d/1W5T2qwiWKnC1j3hociNEwvNV8mgk1o9w3qhcL3kE3wQ/edit?usp=sharing)
+### Download Soundpacks: [Here](https://drive.google.com/file/d/1LQEQ9aOVQAs_wgVecXkjaA9K4LXnCdp_/view?usp=sharing)
 
 ---
 
 ### Mechvibes vs. Rustyvibes
 
 How does Rustyvibes compare to its competitors like Mechvibes? Mechvibes uses Electron and Chromium which is very resource intensive. Rustyvibes on the other hand is made with Rust and can be upto 10x-100x more resource efficient.
+
+Mechvibes Soundpacks: [Here](https://docs.google.com/spreadsheets/d/1PimUN_Qn3CWqfn-93YdVW8OWy8nzpz3w3me41S8S494/edit#gid=0)
+
+
+---
+
+
+### Privacy
+
+Rustyvibes is a fully open-sourced project and never uses any network activity at all.
 
 
 ## Contribute to this project
