@@ -1,6 +1,6 @@
 # Rustyvibes
 
-A Rust CLI to play mechanical keyboard sounds globally
+A Rust CLI that makes mechanical keyboard sound effects on every key press
 
 
 # Installation
