@@ -63,6 +63,9 @@ Usage: rustyvibes <soundpack_path>
         
         let mut json_file = JSONFile { value: None };
         json_file.initialize();
+        
+        println!("Soundpack configuration loaded");
+        println!("Rustyvibes is running");
 
         let event_handler = move |event: Event| {
             json_file.event_handler(event);
