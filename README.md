@@ -37,9 +37,13 @@ Mechvibes Soundpacks: [Here](https://docs.google.com/spreadsheets/d/1PimUN_Qn3CW
 ---
 
 
-### Privacy
+### Privacy and Permissions
 
-Rustyvibes is a fully open-sourced project and never uses any network activity at all.
+Rustyvibes is a fully open-sourced project and never uses any network activity at all. macOS by default will ask you for input monitoring permissions when you start the app for the first time, if you were unable to enable it the first time, you'll need to add your default terminal you're using in the allowed input monitoring apps
+
+![image](https://user-images.githubusercontent.com/61944452/135572648-4358c459-aa06-42e5-a347-ea4feced4efe.png)
+
+
 
 
 ## Contribute to this project
