@@ -4,6 +4,8 @@ use std::env;
 use std::error::Error;
 use std::fs;
 use serde_json::{ Value, Map };
+use thread_priority::*;
+
 
 mod play_sound;
 mod keycode;
@@ -59,6 +61,11 @@ Usage: rustyvibes <soundpack_path>
         {
             #[cfg(any(target_os = "macos", target_os = "linux"))]
             unsafe { use libc::nice; nice(-20) };
+        }
+
+        {
+            #[cfg(target_os = "windows")]
+            assert!(set_current_thread_priority(ThreadPriority::Max).is_ok());
         }
         
         let mut json_file = JSONFile { value: None };
