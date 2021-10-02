@@ -18,5 +18,5 @@ serde = { version = "1.0.127", features = ["derive"] }
 libc = "0.2.66"
 rodio = { version = "0.14.0", git = "https://github.com/orlp/rodio/", rev = "772b7f6" }
 
-[dependencies.windows]
+[target.'cfg(windows)'.dependencies]
 thread-priority = "0.2.4"
