@@ -90,20 +90,20 @@ fn callback(event: Event, json_file: serde_json::Map<std::string::String, serde_
             let directory = args[1].clone();
             // let json_file: serde_json::Map<std::string::String, serde_json::Value> = initialize_json(soundpack_config).unwrap();
             let key_code = key_code::code_from_key(key);
-            match key_code {
+           
+            let mut dest = match key_code {
                 Some(code) => {
-                    let mut dest: String = json_file["defines"][code.to_string().as_str()].to_string();
-                    dest.remove(0);
-                    dest.remove(dest.len() - 1);
-                    sound::play_sound(format!("{}/{}", directory, dest));
+                    json_file["defines"][&code.to_string()].to_string()
                 },
                 None => {
-                    let mut dest: String = json_file["sound"].to_string();
-                    dest.remove(0);
-                    dest.remove(dest.len() - 1);
-                    sound::play_sound(format!("{}/{}", directory, dest));
+                    println!("Unmapped key: {:?}", key);    // for debugging
+                    let default_key = 30;   // keycode for 'a'
+                    json_file["defines"][&default_key.to_string()].to_string()                           
                 }
-            }
+            };
+            dest.remove(0);
+            dest.remove(dest.len() - 1);
+            sound::play_sound(format!("{}/{}", directory, dest));
         },
         _ => ()
     }
