@@ -5,7 +5,6 @@ use std::error::Error;
 use std::fs;
 use serde_json::{ Value, Map };
 
-
 mod play_sound;
 mod keycode;
 
@@ -88,7 +87,6 @@ fn callback(event: Event, json_file: serde_json::Map<std::string::String, serde_
         rdev::EventType::KeyPress(key) => {
             let args: Vec<String> = env::args().collect();
             let directory = args[1].clone();
-            // let json_file: serde_json::Map<std::string::String, serde_json::Value> = initialize_json(soundpack_config).unwrap();
             let key_code = key_code::code_from_key(key);
            
             let mut dest = match key_code {
