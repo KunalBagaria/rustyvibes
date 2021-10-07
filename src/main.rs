@@ -126,7 +126,21 @@ fn callback(event: Event, json_file: serde_json::Map<std::string::String, serde_
                 .lock()
                 .expect("Can't open key_depressed set for removal")
                 .remove(&key_code.unwrap_or(0));
-            // println!("In the future, this'll trigger the keyup sound")
+            let args: Vec<String> = env::args().collect();
+            let directory = args[1].clone();
+
+            let mut dest = match key_code {
+                Some(code) => json_file["defines"][&code.to_string()].to_string(),
+                None => {
+                    println!("Unmapped key: {:?}", key); // for debugging
+                    let default_key = 30; // keycode for 'a'
+                    json_file["defines"][&default_key.to_string()].to_string()
+                }
+            };
+            dest.remove(0);
+            dest.remove(dest.len() - 1);
+            let dest = std::path::Path::new(&dest).with_extension("up.wav");
+            sound::play_sound(format!("{}/{}", directory, &dest.to_str().unwrap()));
         }
         _ => (),
     }

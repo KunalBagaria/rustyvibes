@@ -22,3 +22,12 @@ flume = "0.10.9"
 
 [target.'cfg(windows)'.dependencies]
 thread-priority = "0.2.4"
+
+[[example]]
+name = "trimmer_splitter"
+path = "examples/trimmer_splitter.rs"
+
+[dev-dependencies]
+anyhow = "1.0.44"
+wav = "1.0.0"
+
