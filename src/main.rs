@@ -22,6 +22,15 @@ pub struct JSONFile {
     pub value: Option<serde_json::Map<std::string::String, serde_json::Value>>,
 }
 
+const ASCII_ART: &str =
+            r#"
+██████  ██    ██ ███████ ████████ ██    ██ ██    ██ ██ ██████  ███████ ███████ 
+██   ██ ██    ██ ██         ██     ██  ██  ██    ██ ██ ██   ██ ██      ██      
+██████  ██    ██ ███████    ██      ████   ██    ██ ██ ██████  █████   ███████ 
+██   ██ ██    ██      ██    ██       ██     ██  ██  ██ ██   ██ ██           ██ 
+██   ██  ██████  ███████    ██       ██      ████   ██ ██████  ███████ ███████
+"#;
+
 impl JSONFile {
     pub fn initialize(&mut self) {
         let args: Vec<String> = env::args().collect();
@@ -45,17 +54,10 @@ fn main() {
     let args: Vec<String> = env::args().collect();
 
     if args.len() != 2 {
-        println!(
-            r#"
-██████  ██    ██ ███████ ████████ ██    ██ ██    ██ ██ ██████  ███████ ███████ 
-██   ██ ██    ██ ██         ██     ██  ██  ██    ██ ██ ██   ██ ██      ██      
-██████  ██    ██ ███████    ██      ████   ██    ██ ██ ██████  █████   ███████ 
-██   ██ ██    ██      ██    ██       ██     ██  ██  ██ ██   ██ ██           ██ 
-██   ██  ██████  ███████    ██       ██      ████   ██ ██████  ███████ ███████
+    println!("{} 
+    
+Usage: rustyvibes <soundpack_path>", ASCII_ART);
 
-Usage: rustyvibes <soundpack_path>
-"#
-        );
     } else {
         {
             #[cfg(any(target_os = "macos", target_os = "linux"))]
@@ -76,6 +78,7 @@ Usage: rustyvibes <soundpack_path>
         let mut json_file = JSONFile { value: None };
         json_file.initialize();
 
+        println!("{}", ASCII_ART);
         println!("Soundpack configuration loaded");
         println!("Rustyvibes is running");
 
