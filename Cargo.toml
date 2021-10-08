@@ -19,6 +19,13 @@ libc = "0.2.66"
 rodio = { version = "0.14.0", git = "https://github.com/orlp/rodio/", rev = "772b7f6" }
 once_cell = "1.8.0"
 flume = "0.10.9"
+fltk = "^1.2"
 
 [target.'cfg(windows)'.dependencies]
 thread-priority = "0.2.4"
+
+[package.metadata.bundle]
+name = "Rustyvibes"
+identifier = "com.kunalbagaria.rustyvibes"
+version = "1.0.7"
+copyright = "Copyright (c) Kunal Bagaria. All rights reserved."
