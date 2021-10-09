@@ -1,10 +1,6 @@
-mod listen;
-mod keycode;
-mod play_sound;
-
-use listen::rustyvibes;
 use fltk::{ app, prelude::*, window::Window };
 use std::thread;
+use std::process::{ Command };
 
 fn gui() -> Result<(), Box<dyn std::error::Error>> {
     let app = app::App::default();
@@ -16,8 +12,11 @@ fn gui() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 fn main() {
-    thread::spawn(move || {
-        // rustyvibes::start_listening("/Users/kunalbagaria/Downloads/Soundpacks/nk-cream".to_string());
+    thread::spawn(|| {
+        drop(Command::new("rustyvibes")
+            .arg("/Users/kunalbagaria/Downloads/Soundpacks/nk-cream")
+            .spawn()
+            .expect("Failed to start echo process"));
     });
     drop(gui());
 }
