@@ -35,6 +35,8 @@ How does Rustyvibes compare to its competitors like Mechvibes? Mechvibes uses El
 
 Mechvibes Soundpacks: [Here](https://docs.google.com/spreadsheets/d/1PimUN_Qn3CWqfn-93YdVW8OWy8nzpz3w3me41S8S494/edit#gid=0)
 
+Certain custom soundpacks may not work with Rustyvibes, you can use [this tool](https://github.com/kb24x7/packfixer-rustyvibes) to fix those
+
 
 ---
 
