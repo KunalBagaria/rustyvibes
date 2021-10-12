@@ -1,8 +1,8 @@
 pub mod sound {
     use flume::{Receiver, Sender};
     use once_cell::sync::Lazy;
-    use rodio::source::Buffered;
-    use rodio::{source::Source, Decoder, OutputStream};
+    use rodio_wav_fix::source::Buffered;
+    use rodio_wav_fix::{source::Source, Decoder, OutputStream};
     use std::collections::HashMap;
     use std::fs::File;
     use std::io::BufReader;
@@ -50,7 +50,7 @@ pub mod sound {
                         })
                         .clone()
                 };
-                let sink = rodio::Sink::try_new(&stream_handle).unwrap();
+                let sink = rodio_wav_fix::Sink::try_new(&stream_handle).unwrap();
                 sink.append(source);
                 sink.detach();
             } else {
