@@ -19,3 +19,4 @@ name = "Rustyvibes"
 identifier = "com.kunalbagaria.rustyvibes"
 version = "0.0.1"
 copyright = "Copyright (c) Kunal Bagaria. All rights reserved."
+resources = ["resources"]
