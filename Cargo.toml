@@ -1,5 +1,5 @@
 [package]
-name = "rustyvibes-gui"
+name = "rustyvibes"
 description = "A rust GUI to play mechanical keyboard sounds globally"
 readme = "README.md"
 repository = "https://github.com/kb24x7/rustyvibes-gui"
