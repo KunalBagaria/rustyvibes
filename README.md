@@ -7,14 +7,6 @@ https://user-images.githubusercontent.com/61944452/135816568-400c5053-8a60-4af2-
 
 # Installation
 
-### macOS:
-
-```
-brew install kunalbagaria/rustyvibes/rustyvibes
-```
-
-### Windows / Linux:
-
 ```
 cargo install rustyvibes
 ```
