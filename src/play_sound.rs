@@ -12,6 +12,8 @@ pub mod sound {
 
     type SoundSource = Buffered<Decoder<BufReader<File>>>;
 
+    static mut VOLUME: f32 = 1.0;
+
     static GLOBAL_DATA: Lazy<Mutex<HashMap<String, SoundSource>>> = Lazy::new(|| {
         let m = HashMap::new();
         Mutex::new(m)
@@ -27,7 +29,8 @@ pub mod sound {
         tx
     }
 
-    pub fn play_sound(name: String) {
+    pub fn play_sound(name: String, input_volume: f32) {
+        unsafe { VOLUME = input_volume };
         let mut tx = WORKER_CHANNEL.lock().unwrap();
         if tx.is_disconnected() {
             *tx = new_worker()
@@ -51,6 +54,7 @@ pub mod sound {
                         .clone()
                 };
                 let sink = rodio_wav_fix::Sink::try_new(&stream_handle).unwrap();
+                unsafe { sink.set_volume(VOLUME) };
                 sink.append(source);
                 sink.detach();
             } else {
