@@ -14,8 +14,9 @@ cargo install rustyvibes
 # Usage
 
 ```
-rustyvibes <soundpack_path>
+rustyvibes <volume> <soundpack_path>
 ```
+*volume 0-1.0*
 
 ### Download Soundpacks: [Here](https://drive.google.com/file/d/1LQEQ9aOVQAs_wgVecXkjaA9K4LXnCdp_/view?usp=sharing)
 
