@@ -27,18 +27,23 @@ pub mod sound {
         tx
     }
 
-    pub fn play_sound(name: String) {
+    pub fn play_sound(name: String, volume: u16) {
         let mut tx = WORKER_CHANNEL.lock().unwrap();
         if tx.is_disconnected() {
             *tx = new_worker()
         }
-        tx.send(name).expect("Couldn't send name to threadpool");
+        tx.send(format!("{};{}", name, volume.to_string())).expect("Couldn't send name to threadpool");
+        
     }
 
     pub fn worker(rx_channel: Receiver<String>) {
         let (_stream, stream_handle) = OutputStream::try_default().unwrap();
         loop {
-            if let Ok(name) = rx_channel.recv_timeout(Duration::from_secs(20)) {
+            if let Ok(raw) = rx_channel.recv_timeout(Duration::from_secs(20)) {
+                // The data sent format is <file_name>;<volume>. 
+                let data: Vec<&str> = raw.split(";").collect();
+                let name = data[0].to_string();
+                let volume = data[1].parse::<u16>().expect("Cannot parse volume.");
                 let file_name = format!("{}", name);
                 let source = {
                     let mut sound_map = GLOBAL_DATA.lock().unwrap();
@@ -51,6 +56,10 @@ pub mod sound {
                         .clone()
                 };
                 let sink = rodio_wav_fix::Sink::try_new(&stream_handle).unwrap();
+                // Since sink.set_volume accepts value from range (0 - 1.0), the pased volume
+                // should be divided by 100.
+                let vol = volume as f32 / 100.0;
+                sink.set_volume(vol);
                 sink.append(source);
                 sink.detach();
             } else {

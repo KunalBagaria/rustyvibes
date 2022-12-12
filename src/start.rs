@@ -25,10 +25,10 @@ pub mod rustyvibes {
             let soundpack_config = &format!("{}/config.json", directory)[..];
             self.value = Some(initialize_json(soundpack_config).unwrap());
         }
-        pub fn event_handler(self: &Self, event: Event, directory: String) {
+        pub fn event_handler(self: &Self, event: Event, directory: String, vol: u16) {
             match &self.value {
                 Some(value) => {
-                    callback(event, value.clone(), directory);
+                    callback(event, value.clone(), directory, vol);
                 }
                 None => {
                     println!("JSON wasn't initialized");
@@ -37,7 +37,7 @@ pub mod rustyvibes {
         }
     }
     
-    pub fn start_rustyvibes(args: String) {
+    pub fn start_rustyvibes(args: String, vol: u16) {
         {
             #[cfg(any(target_os = "macos", target_os = "linux"))]
             unsafe {
@@ -61,7 +61,7 @@ pub mod rustyvibes {
         println!("Rustyvibes is running");
 
         let event_handler = move |event: Event| {
-            json_file.event_handler(event, args.clone());
+            json_file.event_handler(event, args.clone(), vol);
         };
 
         if let Err(error) = listen(event_handler) {
@@ -75,7 +75,7 @@ pub mod rustyvibes {
     
     static KEY_DEPRESSED: Lazy<Mutex<HashSet<i32>>> = Lazy::new(|| Mutex::new(HashSet::new()));
     
-    fn callback(event: Event, json_file: serde_json::Map<std::string::String, serde_json::Value>, directory: String) {
+    fn callback(event: Event, json_file: serde_json::Map<std::string::String, serde_json::Value>, directory: String, vol: u16) {
         match event.event_type {
             rdev::EventType::KeyPress(key) => {
                 let key_code = key_code::code_from_key(key);
@@ -94,7 +94,7 @@ pub mod rustyvibes {
                     };
                     dest.remove(0);
                     dest.remove(dest.len() - 1);
-                    sound::play_sound(format!("{}/{}", directory, dest));
+                    sound::play_sound(format!("{}/{}", directory, dest), vol);
                 }
             }
             rdev::EventType::KeyRelease(key) => {
