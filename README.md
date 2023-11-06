@@ -11,6 +11,21 @@ https://user-images.githubusercontent.com/61944452/135816568-400c5053-8a60-4af2-
 cargo install rustyvibes
 ```
 
+## Linux 
+You Will Need To install Advanced Linux Sound Architecture [ ALSA ]
+
+Ubuntu / debian
+```
+sudo apt-get to install alsa-tools
+```
+
+Fedora
+```
+sudo dnf install alsa-lib-devel
+```
+
+
+
 # Usage
 
 ```
