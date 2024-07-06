@@ -16,7 +16,7 @@ You Will Need To install Advanced Linux Sound Architecture [ ALSA ]
 
 Ubuntu / debian
 ```
-sudo apt-get to install alsa-tools
+sudo apt-get install alsa-tools
 ```
 
 Fedora
