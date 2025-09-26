@@ -5,6 +5,7 @@ pub mod rustyvibes {
     use serde_json::{Map, Value};
     use std::error::Error;
     use std::fs;
+    use std::path::Path;
 
     pub use crate::keycode::key_code;
     pub use crate::play_sound::sound;
@@ -21,23 +22,39 @@ pub mod rustyvibes {
     }
 
     impl JSONFile {
-        pub fn initialize(&mut self, directory: String) {
+        pub fn initialize(&mut self, directory: String, debug: bool) {
             let soundpack_config = &format!("{}/config.json", directory)[..];
-            self.value = Some(initialize_json(soundpack_config).unwrap());
+            if !Path::new(&directory).exists() {
+                if debug {
+                    eprintln!("Error: Soundpack path does not exist: {}", directory);
+                }
+                std::process::exit(1);
+            }
+            match initialize_json(soundpack_config) {
+                Ok(value) => self.value = Some(value),
+                Err(e) => {
+                    if debug {
+                        eprintln!("Error loading config.json: {}", e);
+                    }
+                    std::process::exit(1);
+                }
+            }
         }
-        pub fn event_handler(self: &Self, event: Event, directory: String, vol: u16) {
+        pub fn event_handler(self: &Self, event: Event, directory: String, vol: u16, debug: bool) {
             match &self.value {
                 Some(value) => {
-                    callback(event, value.clone(), directory, vol);
+                    callback(event, value.clone(), directory, vol, debug);
                 }
                 None => {
-                    println!("JSON wasn't initialized");
+                    if debug {
+                        println!("JSON wasn't initialized");
+                    }
                 }
             }
         }
     }
 
-    pub fn start_rustyvibes(args: String, vol: u16) {
+    pub fn start_rustyvibes(args: String, vol: u16, debug: bool) {
         {
             #[cfg(any(target_os = "macos", target_os = "linux"))]
             unsafe {
@@ -55,17 +72,22 @@ pub mod rustyvibes {
         }
 
         let mut json_file = JSONFile { value: None };
-        json_file.initialize(args.clone());
+        json_file.initialize(args.clone(), debug);
 
-        println!("Soundpack configuration loaded");
-        println!("Rustyvibes is running");
+        if debug {
+            println!("Soundpack configuration loaded");
+            println!("Rustyvibes is running");
+        }
 
         let event_handler = move |event: Event| {
-            json_file.event_handler(event, args.clone(), vol);
+            json_file.event_handler(event, args.clone(), vol, debug);
         };
 
         if let Err(error) = listen(event_handler) {
-            println!("Error: {:?}", error)
+            if debug {
+                println!("Error: {:?}", error);
+            }
+            std::process::exit(1);
         }
     }
 
@@ -75,7 +97,7 @@ pub mod rustyvibes {
 
     static KEY_DEPRESSED: Lazy<Mutex<HashSet<i32>>> = Lazy::new(|| Mutex::new(HashSet::new()));
 
-    fn callback(event: Event, json_file: serde_json::Map<std::string::String, serde_json::Value>, directory: String, vol: u16) {
+    fn callback(event: Event, json_file: serde_json::Map<std::string::String, serde_json::Value>, directory: String, vol: u16, debug: bool) {
         match event.event_type {
             rdev::EventType::KeyPress(key) => {
                 let key_code = key_code::code_from_key(key);
@@ -87,7 +109,9 @@ pub mod rustyvibes {
                     let mut dest = match key_code {
                         Some(code) => json_file["defines"][&code.to_string()].to_string(),
                         None => {
-                            println!("Unmapped key: {:?}", key); // for debugging
+                            if debug {
+                                println!("Unmapped key: {:?}", key); // for debugging
+                            }
                             let default_key = 30; // keycode for 'a'
                             json_file["defines"][&default_key.to_string()].to_string()
                         }

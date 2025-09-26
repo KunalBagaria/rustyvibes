@@ -2,61 +2,55 @@
 
 A Rust CLI that makes mechanical keyboard sound effects on every key press
 
-https://user-images.githubusercontent.com/61944452/135816568-400c5053-8a60-4af2-b43e-e5f15d7b3d74.mp4
-
-
-# Installation
-
-```
+## Installation
+OG
+```bash
 cargo install rustyvibes
 ```
+My fix
+```bash
+cargo install --git https://github.com/insasquatchcountry/rustyvibes.git --branch feature/silent-mode-default
+```
+## Linux
 
-## Linux 
-You Will Need To install Advanced Linux Sound Architecture [ ALSA ]
+You will need to install Advanced Linux Sound Architecture [ALSA]
 
-Ubuntu / debian
+**Ubuntu / Debian**
+
 ```
 sudo apt-get install alsa-tools
 ```
 
-Fedora
+**Fedora**
+
 ```
 sudo dnf install alsa-lib-devel
 ```
 
-
-
-# Usage
+## Usage
 
 ```
-rustyvibes <soundpack_path> -v <volume> (0-100 | optional)
+rustyvibes <soundpack_path> [-v <volume>] [-d]
 ```
 
-### Download Soundpacks: [Here](https://drive.google.com/file/d/1LQEQ9aOVQAs_wgVecXkjaA9K4LXnCdp_/view?usp=sharing)
-
----
+- `<soundpack_path>`: Path to the soundpack directory.
+- `-v <volume>`: Volume level (0-100, default: 100).
+- `-d, --debug`: Enable debug mode to show console output (e.g., errors, unmapped keys). By default, only the ASCII art is displayed.
 
 ### Mechvibes vs. Rustyvibes
 
-How does Rustyvibes compare to its competitors like Mechvibes? Mechvibes uses Electron and Chromium which is very resource intensive. Rustyvibes on the other hand is made with Rust and can be upto 10x-100x more resource efficient.
+How does Rustyvibes compare to its competitors like Mechvibes? Mechvibes uses Electron and Chromium which is very resource intensive. Rustyvibes on the other hand is made with Rust and can be up to 10x-100x more resource efficient.
 
-Mechvibes Soundpacks: [Here](https://docs.google.com/spreadsheets/d/1PimUN_Qn3CWqfn-93YdVW8OWy8nzpz3w3me41S8S494/edit#gid=0)
+**Mechvibes Soundpacks**: [Here](https://github.com/hainguyents13/mechvibes)
 
-Certain custom soundpacks may not work with Rustyvibes, you can use [this tool](https://github.com/kb24x7/packfixer-rustyvibes) to fix those
-
-
----
-
+Certain custom soundpacks may not work with Rustyvibes, you can use [this tool](https://github.com/hainguyents13/mechvibes) to fix those.
 
 ### Privacy and Permissions
 
-Rustyvibes is a fully open-sourced project and never uses any network activity at all. macOS by default will ask you for input monitoring permissions when you start the app for the first time, if you were unable to enable it the first time, you'll need to add your default terminal you're using in the allowed input monitoring apps
+Rustyvibes is a fully open-sourced project and never uses any network activity at all. macOS by default will ask you for input monitoring permissions when you start the app for the first time. If you were unable to enable it the first time, you'll need to add your default terminal you're using in the allowed input monitoring apps.
 
-![image](https://user-images.githubusercontent.com/61944452/135572648-4358c459-aa06-42e5-a347-ea4feced4efe.png)
-
-
-
+![image](https://github.com/user-attachments/assets/4e6b3a2e-ffd9-4c0a-975c-2f8a3b5e7c3b)
 
 ## Contribute to this project
 
-[![buymeacoffee](https://user-images.githubusercontent.com/61944452/135130205-4ae387f7-fb32-482e-931c-1b393588872f.png)](https://www.buymeacoffee.com/kb24x7)
+[Buy Me a Coffee](https://www.buymeacoffee.com/kb24x7)

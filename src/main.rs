@@ -15,12 +15,12 @@ const ASCII_ART: &str =
 ██   ██  ██████  ███████    ██       ██      ████   ██ ██████  ███████ ███████
 "#;
 
-
 fn main() {
     println!("{}", ASCII_ART);
     let a = ArgParser::parse();
     let soundpack = a.soundpack;
-    let vol = a.volume.or(Some(100)).unwrap();
+    let vol = a.volume.unwrap_or(100).min(100);
+    let debug = a.debug;
 
-    start::rustyvibes::start_rustyvibes(soundpack, vol);
+    start::rustyvibes::start_rustyvibes(soundpack, vol, debug);
 }
